@@ -1,0 +1,12 @@
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/bin/Debug/net10.0/CleanArchitecture.WebApi.Domain.deps.json
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/bin/Debug/net10.0/CleanArchitecture.WebApi.Domain.dll
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/bin/Debug/net10.0/CleanArchitecture.WebApi.Domain.pdb
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.AssemblyInfoInputs.cache
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.AssemblyInfo.cs
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.csproj.CoreCompileInputs.cache
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.sourcelink.json
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.dll
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/refint/CleanArchitecture.WebApi.Domain.dll
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/CleanArchitecture.WebApi.Domain.pdb
+/Users/juanabaunzadev/Proyectos/CleanArchitecture.WebApi.DotNet/CleanArchitecture.WebApi.Domain/obj/Debug/net10.0/ref/CleanArchitecture.WebApi.Domain.dll
