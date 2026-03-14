@@ -1,0 +1,59 @@
+# Carpetas de build
+bin/
+obj/
+.vs/
+
+# Archivos del usuario
+*.user
+*.userprefs
+*.suo
+
+# Archivos de salida de build
+*.dll
+*.exe
+*.pdb
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Visual Studio
+.vs/
+.vscode/
+*.sln.iml
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+.idea/
+
+# Dependencias
+node_modules/
+package-lock.json
+yarn.lock
+
+# Archivos de test
+TestResults/
+*.trx
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# Configuración local
+appsettings.local.json
+.env
+.env.local
+
+# Archivos de IDE
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# Otros
+*.bak
+*.swp
+*~
