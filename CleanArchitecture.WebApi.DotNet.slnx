@@ -1,2 +1,3 @@
 <Solution>
+  <Project Path="CleanArchitecture.WebApi.Domain/CleanArchitecture.WebApi.Domain.csproj" />
 </Solution>
