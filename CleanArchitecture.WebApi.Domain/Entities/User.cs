@@ -26,6 +26,9 @@ public class User
         if (string.IsNullOrWhiteSpace(lastName))
             throw new DomainException("User last name is required.");
 
+            if (string.IsNullOrWhiteSpace(email))
+            throw new DomainException("User email is required.");
+
         if (string.IsNullOrWhiteSpace(passwordHash))
             throw new DomainException("User password hash is required.");
 
