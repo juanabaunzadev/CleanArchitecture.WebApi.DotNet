@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="CleanArchitecture.WebApi.Application/CleanArchitecture.WebApi.Application.csproj" />
   <Project Path="CleanArchitecture.WebApi.Domain/CleanArchitecture.WebApi.Domain.csproj" />
+  <Project Path="CleanArchitecture.WebApi.Infrastructure/CleanArchitecture.WebApi.Infrastructure.csproj" />
   <Project Path="CleanArchitecture.WebApi.Tests/CleanArchitecture.WebApi.Tests.csproj" />
 </Solution>
