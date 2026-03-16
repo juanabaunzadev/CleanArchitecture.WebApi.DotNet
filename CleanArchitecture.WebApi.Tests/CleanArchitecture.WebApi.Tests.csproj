@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="../CleanArchitecture.WebApi.Application/CleanArchitecture.WebApi.Application.csproj" />
     <ProjectReference Include="../CleanArchitecture.WebApi.Domain/CleanArchitecture.WebApi.Domain.csproj" />
+    <ProjectReference Include="../CleanArchitecture.WebApi.Infrastructure/CleanArchitecture.WebApi.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,8 @@
     <Folder Include="Application/UseCases/Users/Commands/" />
     <Folder Include="Domain/Entities/" />
     <Folder Include="Domain/ValueObjects/" />
+    <Folder Include="Infrastructure/" />
+    <Folder Include="Infrastructure/Mediator/" />
   </ItemGroup>
 
 </Project>
