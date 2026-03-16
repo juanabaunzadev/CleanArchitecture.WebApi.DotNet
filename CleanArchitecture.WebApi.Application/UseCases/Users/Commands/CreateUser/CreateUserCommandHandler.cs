@@ -1,3 +1,4 @@
+using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
 using CleanArchitecture.WebApi.Application.Exceptions;
@@ -6,7 +7,7 @@ using FluentValidation;
 
 namespace CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 
-public class CreateUserCommandHandler
+public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
 {
     private readonly IValidator<CreateUserCommand> _validator;
     private readonly IUserRepository _userRepository;

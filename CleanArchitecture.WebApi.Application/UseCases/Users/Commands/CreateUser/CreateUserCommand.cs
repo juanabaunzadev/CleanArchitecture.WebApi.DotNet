@@ -1,3 +1,5 @@
+using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
+
 namespace CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 
 public sealed record CreateUserCommand(
@@ -5,4 +7,4 @@ public sealed record CreateUserCommand(
     string LastName,
     string Email,
     string Password
-);
+) : ICommand<Guid>;
