@@ -9,29 +9,21 @@ namespace CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUse
 
 public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
 {
-    private readonly IValidator<CreateUserCommand> _validator;
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
 
     public CreateUserCommandHandler(
-        IValidator<CreateUserCommand> validator,
         IUserRepository userRepository,
         IUnitOfWork unitOfWork)
     {
-        _validator = validator;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Guid> Handle(CreateUserCommand command)
     {
-        var validationResult = await _validator.ValidateAsync(command);
-        if (!validationResult.IsValid)
-        {
-            throw new AppValidationException(validationResult);
-        }
-
         var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
+        
         try
         {
             var response = await _userRepository.Add(user);

@@ -1,5 +1,7 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Exceptions;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanArchitecture.WebApi.Infrastructure.Mediator;
@@ -15,6 +17,18 @@ public class AppMediator : IMediator
 
     public async Task<TResponse> Send<TResponse>(ICommand<TResponse> command)
     {
+        var validatorType = typeof(IValidator<>).MakeGenericType(command.GetType());
+        var validator = _serviceProvider.GetService(validatorType);
+
+        if (validator is IValidator validatorInstance)
+        {
+            var context = new ValidationContext<object>(command);
+            var validationResult = await validatorInstance.ValidateAsync(context);
+            
+            if (!validationResult.IsValid)
+                throw new AppValidationException(validationResult);
+        }
+
         var handlerType = typeof(ICommandHandler<,>)
             .MakeGenericType(command.GetType(), typeof(TResponse));
 
@@ -28,6 +42,18 @@ public class AppMediator : IMediator
 
     public async Task<TResponse> Send<TResponse>(IQuery<TResponse> query)
     {
+        var validatorType = typeof(IValidator<>).MakeGenericType(query.GetType());
+        var validator = _serviceProvider.GetService(validatorType);
+
+        if (validator is IValidator validatorInstance)
+        {
+            var context = new ValidationContext<object>(query);
+            var validationResult = await validatorInstance.ValidateAsync(context);
+
+            if (!validationResult.IsValid)
+                throw new AppValidationException(validationResult);
+        }
+        
         var handlerType = typeof(IQueryHandler<,>)
             .MakeGenericType(query.GetType(), typeof(TResponse));
 

@@ -1,6 +1,8 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Infrastructure.Mediator;
+using FluentValidation;
 using NSubstitute;
 
 namespace CleanArchitecture.WebApi.Tests.Infrastructure.Mediator;
@@ -9,7 +11,10 @@ namespace CleanArchitecture.WebApi.Tests.Infrastructure.Mediator;
 public class AppMediatorTests
 {
     // Fake Command
-    public record FakeCommand : ICommand<Guid>;
+    public record FakeCommand : ICommand<Guid>
+    {
+        public required string Name { get; set; }
+    };
 
     // Fake Handler
     public class FakeCommandHandler : ICommandHandler<FakeCommand, Guid>
@@ -17,6 +22,15 @@ public class AppMediatorTests
         public Task<Guid> Handle(FakeCommand command)
         {
             return Task.FromResult(Guid.CreateVersion7());
+        }
+    }
+
+    // Fake Validator
+    public class FakeCommandValidator : AbstractValidator<FakeCommand>
+    {
+        public FakeCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty();
         }
     }
 
@@ -33,7 +47,7 @@ public class AppMediatorTests
     public async Task Send_ShouldCallHandler_WhenCommandHandlerIsRegistered()
     {
         // Arrange
-        var command = new FakeCommand();
+        var command = new FakeCommand(){ Name = "Test Command" };
         var expectedId = Guid.CreateVersion7();
 
         var handler = Substitute.For<ICommandHandler<FakeCommand, Guid>>();
@@ -54,7 +68,7 @@ public class AppMediatorTests
     public async Task Send_ShouldThrowMediatorException_WhenHandlerIsNotRegistered()
     {
         // Arrange
-        var command = new FakeCommand();
+        var command = new FakeCommand(){ Name = "Test Command" };
 
         _serviceProvider.GetService(Arg.Any<Type>()).Returns(null!);
 
@@ -63,5 +77,22 @@ public class AppMediatorTests
 
         // Assert
         await Assert.ThrowsAsync<MediatorException>(act);
+    }
+
+    [TestMethod]
+    public async Task Send_ShouldThrowAppValidationException_WhenValidationFails()
+    {
+        // Arrange
+        var command = new FakeCommand(){ Name = "" };
+        var validator = new FakeCommandValidator();
+        
+        _serviceProvider.GetService(typeof(IValidator<FakeCommand>))
+            .Returns(validator);
+
+        // Act
+        var act = async () => await _mediator.Send(command);
+
+        // Assert
+        await Assert.ThrowsAsync<AppValidationException>(act);
     }
 }
