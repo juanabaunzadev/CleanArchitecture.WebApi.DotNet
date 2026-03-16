@@ -27,6 +27,7 @@
     <Folder Include="Application/UseCases/" />
     <Folder Include="Application/UseCases/Users/" />
     <Folder Include="Application/UseCases/Users/Commands/" />
+    <Folder Include="Application/UseCases/Users/Queries/" />
     <Folder Include="Domain/Entities/" />
     <Folder Include="Domain/ValueObjects/" />
     <Folder Include="Infrastructure/" />
