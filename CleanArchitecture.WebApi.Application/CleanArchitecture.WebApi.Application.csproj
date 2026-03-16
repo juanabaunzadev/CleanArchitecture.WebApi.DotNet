@@ -11,11 +11,15 @@
     <Folder Include="Abstractions/Mediator/" />
     <Folder Include="Abstractions/Persistence/" />
     <Folder Include="Abstractions/Repositories/" />
+    <Folder Include="DTOs/" />
+    <Folder Include="DTOs/Users/" />
+    <Folder Include="Mappers/" />
     <Folder Include="UseCases/" />
     <Folder Include="UseCases/Users/" />
     <Folder Include="UseCases/Users/Commands/" />
     <Folder Include="UseCases/Users/Commands/CreateUser/" />
     <Folder Include="UseCases/Users/Queries/" />
+    <Folder Include="UseCases/Users/Queries/GetUserById/" />
   </ItemGroup>
 
   <ItemGroup>
