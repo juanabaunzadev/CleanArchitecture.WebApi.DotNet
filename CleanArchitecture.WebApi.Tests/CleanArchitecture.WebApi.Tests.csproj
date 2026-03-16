@@ -9,9 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="MSTest" Version="4.0.1" />
+    <PackageReference Include="NSubstitute" Version="6.0.0-rc.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../CleanArchitecture.WebApi.Application/CleanArchitecture.WebApi.Application.csproj" />
     <ProjectReference Include="../CleanArchitecture.WebApi.Domain/CleanArchitecture.WebApi.Domain.csproj" />
   </ItemGroup>
 
@@ -20,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application/" />
+    <Folder Include="Application/UseCases/" />
+    <Folder Include="Application/UseCases/Users/" />
+    <Folder Include="Application/UseCases/Users/Commands/" />
     <Folder Include="Domain/Entities/" />
     <Folder Include="Domain/ValueObjects/" />
   </ItemGroup>
