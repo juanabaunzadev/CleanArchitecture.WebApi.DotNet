@@ -19,4 +19,13 @@ Content-Type: application/json
   "password": "Secret123!"
 }
 
-###
+### Update user
+PUT {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "password": "Secret123!"
+}

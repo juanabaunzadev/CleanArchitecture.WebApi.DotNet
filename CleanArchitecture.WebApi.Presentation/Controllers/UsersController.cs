@@ -1,6 +1,7 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.DTOs.Users;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
+using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.UpdateUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
 using CleanArchitecture.WebApi.Presentation.Requests.Users;
@@ -37,13 +38,21 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
-
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
         var command = new CreateUserCommand(request.FirstName, request.LastName, request.Email, request.Password);
         await _mediator.Send(command);
         
+        return Ok();
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request)
+    {
+        var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email);
+        await _mediator.Send(command);
+
         return Ok();
     }
 }
