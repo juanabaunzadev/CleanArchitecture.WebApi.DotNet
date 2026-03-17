@@ -1,6 +1,0 @@
-@CleanArchitecture.WebApi.Presentation_HostAddress = http://localhost:5109
-
-GET {{CleanArchitecture.WebApi.Presentation_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
