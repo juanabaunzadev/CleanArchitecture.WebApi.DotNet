@@ -18,6 +18,7 @@
     <Folder Include="UseCases/Users/" />
     <Folder Include="UseCases/Users/Commands/" />
     <Folder Include="UseCases/Users/Commands/CreateUser/" />
+    <Folder Include="UseCases/Users/Commands/UpdateUser/" />
     <Folder Include="UseCases/Users/Queries/" />
     <Folder Include="UseCases/Users/Queries/GetAllUsers/" />
     <Folder Include="UseCases/Users/Queries/GetUserById/" />
