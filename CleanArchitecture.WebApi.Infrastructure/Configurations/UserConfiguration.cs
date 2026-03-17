@@ -11,7 +11,10 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(u => u.Id);
         builder.Property(u => u.FirstName).IsRequired().HasMaxLength(100);
         builder.Property(u => u.LastName).IsRequired().HasMaxLength(100);
-        builder.Property(u => u.Email).IsRequired().HasMaxLength(255);
+        builder.OwnsOne(u => u.Email, email =>
+        {
+            email.Property(e => e.Value).HasColumnName("Email").IsRequired().HasMaxLength(255);
+        });
         builder.Property(u => u.PasswordHash).IsRequired();
     }
 }
