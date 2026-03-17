@@ -9,11 +9,18 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.13.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../CleanArchitecture.WebApi.Application/CleanArchitecture.WebApi.Application.csproj" />
     <ProjectReference Include="../CleanArchitecture.WebApi.Infrastructure/CleanArchitecture.WebApi.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers/" />
+    <Folder Include="Requests/" />
+    <Folder Include="Requests/Users/" />
   </ItemGroup>
 
 </Project>

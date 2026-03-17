@@ -1,0 +1,14 @@
+@HostAddress = http://localhost:5109/api/users
+
+### Create user
+POST {{HostAddress}}
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Doe",
+  "email": "juan.doe@example.com",
+  "password": "Secret123!"
+}
+
+###
