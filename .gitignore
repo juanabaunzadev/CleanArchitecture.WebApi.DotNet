@@ -47,6 +47,11 @@ appsettings.local.json
 .env
 .env.local
 
+# Configuración por entorno (datos sensibles)
+appsettings.Development.json
+appsettings.Quality.json
+appsettings.Production.json
+
 # Archivos de IDE
 .idea/
 .vscode/settings.json
