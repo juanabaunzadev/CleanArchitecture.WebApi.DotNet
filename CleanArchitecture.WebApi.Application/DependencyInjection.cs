@@ -1,6 +1,7 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.DTOs.Users;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
+using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.DeleteUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.UpdateUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
@@ -16,6 +17,7 @@ public static class DependencyInjection
         services.AddScoped<IQueryHandler<GetUserByIdQuery, UserResponse>, GetUserByIdQueryHandler>();
         services.AddScoped<ICommandHandler<CreateUserCommand, Guid>, CreateUserCommandHandler>();
         services.AddScoped<ICommandHandler<UpdateUserCommand>, UpdateUserCommandHandler>();
+        services.AddScoped<ICommandHandler<DeleteUserCommand>, DeleteUserCommandHandler>();
 
         return services;
     }
