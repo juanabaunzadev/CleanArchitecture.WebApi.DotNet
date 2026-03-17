@@ -1,5 +1,6 @@
 using CleanArchitecture.WebApi.Application;
 using CleanArchitecture.WebApi.Infrastructure;
+using CleanArchitecture.WebApi.Presentation.Middlewares;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
 
