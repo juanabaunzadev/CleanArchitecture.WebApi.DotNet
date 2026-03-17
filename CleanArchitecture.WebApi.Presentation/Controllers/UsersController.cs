@@ -1,5 +1,8 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
+using CleanArchitecture.WebApi.Application.DTOs.Users;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
+using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
+using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
 using CleanArchitecture.WebApi.Presentation.Requests.Users;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +18,25 @@ public class UsersController : ControllerBase
     {
         _mediator = mediator;
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyList<UserResponse>>> GetAll()
+    {
+        var query = new GetAllUsersQuery();
+        var users = await _mediator.Send(query);
+
+        return Ok(users);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<UserResponse>> GetById(Guid id)
+    {
+        var query = new GetUserByIdQuery(id);
+        var user = await _mediator.Send(query);
+        
+        return Ok(user);
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request)

@@ -1,5 +1,13 @@
 @HostAddress = http://localhost:5109/api/users
 
+### Get all users
+GET {{HostAddress}}
+Accept: application/json
+
+### Get user by id
+GET {{HostAddress}}/019cfa34-7caf-7a27-b595-0443042d2475
+Accept: application/json
+
 ### Create user
 POST {{HostAddress}}
 Content-Type: application/json
