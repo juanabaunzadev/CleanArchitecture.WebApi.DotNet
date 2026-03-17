@@ -20,17 +20,7 @@ public class User
 
     public static User Create(string firstName, string lastName, string email, string passwordHash)
     {
-        if (string.IsNullOrWhiteSpace(firstName))
-            throw new DomainException("User first name is required.");
-
-        if (string.IsNullOrWhiteSpace(lastName))
-            throw new DomainException("User last name is required.");
-
-            if (string.IsNullOrWhiteSpace(email))
-            throw new DomainException("User email is required.");
-
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new DomainException("User password hash is required.");
+        VerifyDomainRules(firstName, lastName, email, passwordHash);
 
         return new User
         {
@@ -43,5 +33,29 @@ public class User
             CreatedAt = DateTime.UtcNow,
             UserRoles = new List<UserRole>()
         };
+    }
+
+    public void Update(string firstName, string lastName, string email)
+    {
+        VerifyDomainRules(firstName, lastName, email);
+
+        FirstName = firstName.Trim();
+        LastName = lastName.Trim();
+        Email = Email.Create(email);
+    }
+
+    private static void VerifyDomainRules(string firstName, string lastName, string email, string? passwordHash = null)
+    {
+        if (string.IsNullOrWhiteSpace(firstName))
+            throw new DomainException("User first name is required.");
+
+        if (string.IsNullOrWhiteSpace(lastName))
+            throw new DomainException("User last name is required.");
+
+        if (string.IsNullOrWhiteSpace(email))
+            throw new DomainException("User email is required.");
+
+        if (passwordHash is not null && string.IsNullOrWhiteSpace(passwordHash))
+            throw new DomainException("User password hash is required.");
     }
 }
