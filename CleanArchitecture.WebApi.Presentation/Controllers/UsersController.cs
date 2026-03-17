@@ -1,6 +1,7 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.DTOs.Users;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
+using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.DeleteUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.UpdateUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
@@ -51,6 +52,15 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request)
     {
         var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email);
+        await _mediator.Send(command);
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var command = new DeleteUserCommand(id);
         await _mediator.Send(command);
 
         return Ok();

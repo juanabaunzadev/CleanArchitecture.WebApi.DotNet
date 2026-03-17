@@ -29,3 +29,7 @@ Content-Type: application/json
   "email": "john.doe@example.com",
   "password": "Secret123!"
 }
+
+### Delete user
+DELETE {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
+Accept: application/json
