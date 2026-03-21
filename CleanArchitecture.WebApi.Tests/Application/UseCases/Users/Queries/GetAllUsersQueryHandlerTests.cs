@@ -1,4 +1,5 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
+using CleanArchitecture.WebApi.Application.Common;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 using CleanArchitecture.WebApi.Domain.Entities;
 using NSubstitute;
@@ -30,21 +31,23 @@ public class GetAllUsersQueryHandlerTests
             User.Create("Jane", "Smith", "jane.smith@example.com", "password123")
         };
 
-        _userRepository.GetAllAsync().Returns(users);
+        var paginatedUsers = new PaginatedList<User>(users, page: 1, pageSize: 10, totalCount: 2);
+
+        _userRepository.GetPagedAsync(1, 10).Returns(paginatedUsers);
 
         // Act
-        var result = _handler.Handle(new GetAllUsersQuery()).Result;
+        var result = _handler.Handle(new GetAllUsersQuery(1, 10)).Result;
 
         // Assert
-        Assert.HasCount(users.Count, result);
+        Assert.HasCount(users.Count, result.Items);
         for (int i = 0; i < users.Count; i++)
         {
-            Assert.AreEqual(users[i].Id, result[i].Id);
-            Assert.AreEqual(users[i].FirstName, result[i].FirstName);
-            Assert.AreEqual(users[i].LastName, result[i].LastName);
-            Assert.AreEqual(users[i].Email.Value, result[i].Email);
-            Assert.AreEqual(users[i].IsActive, result[i].IsActive);
-            Assert.AreEqual(users[i].CreatedAt, result[i].CreatedAt);
+            Assert.AreEqual(users[i].Id, result.Items[i].Id);
+            Assert.AreEqual(users[i].FirstName, result.Items[i].FirstName);
+            Assert.AreEqual(users[i].LastName, result.Items[i].LastName);
+            Assert.AreEqual(users[i].Email.Value, result.Items[i].Email);
+            Assert.AreEqual(users[i].IsActive, result.Items[i].IsActive);
+            Assert.AreEqual(users[i].CreatedAt, result.Items[i].CreatedAt);
         }
     }
 
@@ -52,13 +55,15 @@ public class GetAllUsersQueryHandlerTests
     public void Handle_Returns_Empty_List_When_No_Users()
     {
         // Arrange
-        _userRepository.GetAllAsync().Returns(new List<User>());
+        var paginatedUsers = new PaginatedList<User>(new List<User>(), page: 1, pageSize: 10, totalCount: 0);
+
+        _userRepository.GetPagedAsync(1, 10).Returns(paginatedUsers);
 
         // Act
-        var result = _handler.Handle(new GetAllUsersQuery()).Result;
+        var result = _handler.Handle(new GetAllUsersQuery(1, 10)).Result;
 
         // Assert
         Assert.IsNotNull(result);
-        Assert.IsEmpty(result);
+        Assert.IsEmpty(result.Items);
     }
 }
