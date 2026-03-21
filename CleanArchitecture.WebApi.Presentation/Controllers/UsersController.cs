@@ -1,4 +1,5 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
+using CleanArchitecture.WebApi.Application.Common;
 using CleanArchitecture.WebApi.Application.DTOs.Users;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.DeleteUser;
@@ -22,9 +23,11 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<UserResponse>>> GetAll()
+    public async Task<ActionResult<PaginatedList<UserResponse>>> GetAll(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
     {
-        var query = new GetAllUsersQuery();
+        var query = new GetAllUsersQuery(page, pageSize);
         var users = await _mediator.Send(query);
 
         return Ok(users);
