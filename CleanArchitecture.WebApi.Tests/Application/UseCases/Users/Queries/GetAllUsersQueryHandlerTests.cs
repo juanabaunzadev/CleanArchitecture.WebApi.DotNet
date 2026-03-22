@@ -22,7 +22,7 @@ public class GetAllUsersQueryHandlerTests
     }
 
     [TestMethod]
-    public void Handle_Returns_All_Users()
+    public void Handle_Returns_Paged_Users()
     {
         // Arrange
         var users = new List<User>
@@ -33,7 +33,7 @@ public class GetAllUsersQueryHandlerTests
 
         var paginatedUsers = new PaginatedList<User>(users, page: 1, pageSize: 10, totalCount: 2);
 
-        _userRepository.GetPagedAsync(1, 10).Returns(paginatedUsers);
+        _userRepository.GetPagedAsync(1, 10, Arg.Any<Specification<User>>()).Returns(paginatedUsers);
 
         // Act
         var result = _handler.Handle(new GetAllUsersQuery(1, 10)).Result;
@@ -57,7 +57,7 @@ public class GetAllUsersQueryHandlerTests
         // Arrange
         var paginatedUsers = new PaginatedList<User>(new List<User>(), page: 1, pageSize: 10, totalCount: 0);
 
-        _userRepository.GetPagedAsync(1, 10).Returns(paginatedUsers);
+        _userRepository.GetPagedAsync(1, 10, Arg.Any<Specification<User>>()).Returns(paginatedUsers);
 
         // Act
         var result = _handler.Handle(new GetAllUsersQuery(1, 10)).Result;
@@ -65,5 +65,26 @@ public class GetAllUsersQueryHandlerTests
         // Assert
         Assert.IsNotNull(result);
         Assert.IsEmpty(result.Items);
+    }
+
+    [TestMethod]
+    public void Handle_Returns_Filtered_Users_By_FirstName()
+    {
+        // Arrange
+        var users = new List<User>
+        {
+            User.Create("John", "Doe", "john.doe@example.com", "password123")
+        };
+
+        var paginatedUsers = new PaginatedList<User>(users, page: 1, pageSize: 10, totalCount: 1);
+
+        _userRepository.GetPagedAsync(1, 10, Arg.Any<Specification<User>>()).Returns(paginatedUsers);
+
+        // Act
+        var result = _handler.Handle(new GetAllUsersQuery(1, 10, FirstName: "John")).Result;
+
+        // Assert
+        Assert.HasCount(1, result.Items);
+        Assert.AreEqual("John", result.Items[0].FirstName);
     }
 }

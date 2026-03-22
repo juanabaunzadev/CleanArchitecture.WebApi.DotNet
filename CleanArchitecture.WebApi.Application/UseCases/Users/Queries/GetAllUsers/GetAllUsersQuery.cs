@@ -4,4 +4,12 @@ using CleanArchitecture.WebApi.Application.DTOs.Users;
 
 namespace CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 
-public sealed record GetAllUsersQuery(int Page, int PageSize) : IQuery<PaginatedList<UserResponse>>;
+public sealed record GetAllUsersQuery(
+    int Page,
+    int PageSize,
+    string? FirstName = null,
+    string? LastName = null,
+    bool? IsActive = null,
+    string? OrderBy = null,
+    string? OrderDirection = null
+) : IQuery<PaginatedList<UserResponse>>;

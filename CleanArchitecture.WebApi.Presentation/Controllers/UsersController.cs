@@ -25,9 +25,14 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<PaginatedList<UserResponse>>> GetAll(
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 10)
+        [FromQuery] int pageSize = 10,
+        [FromQuery] string? firstName = null,
+        [FromQuery] string? lastName = null,
+        [FromQuery] bool? isActive = null,
+        [FromQuery] string? orderBy = null,
+        [FromQuery] string? orderDirection = null)
     {
-        var query = new GetAllUsersQuery(page, pageSize);
+        var query = new GetAllUsersQuery(page, pageSize, firstName, lastName, isActive, orderBy, orderDirection);
         var users = await _mediator.Send(query);
 
         return Ok(users);

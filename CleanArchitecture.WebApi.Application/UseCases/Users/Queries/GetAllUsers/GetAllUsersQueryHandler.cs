@@ -17,7 +17,8 @@ public class GetAllUsersQueryHandler : IQueryHandler<GetAllUsersQuery, Paginated
 
     public async Task<PaginatedList<UserResponse>> Handle(GetAllUsersQuery query)
     {
-        var users = await _userRepository.GetPagedAsync(query.Page, query.PageSize);
+        var spec = new UserSpecification(query.FirstName, query.LastName, query.IsActive, query.OrderBy, query.OrderDirection);
+        var users = await _userRepository.GetPagedAsync(query.Page, query.PageSize, spec);
         var mappedItems = UserMapper.ToResponseList(users.Items);
 
         return new PaginatedList<UserResponse>(mappedItems, users.Page, users.PageSize, users.TotalCount);

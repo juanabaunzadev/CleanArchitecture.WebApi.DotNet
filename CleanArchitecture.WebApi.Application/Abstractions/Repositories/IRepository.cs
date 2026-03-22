@@ -6,7 +6,7 @@ public interface IRepository<TEntity> where TEntity : class
 {
     Task<TEntity?> GetByIdAsync(Guid id);
     Task<IEnumerable<TEntity>> GetAllAsync();
-    Task<PaginatedList<TEntity>> GetPagedAsync(int page, int pageSize);
+    Task<PaginatedList<TEntity>> GetPagedAsync(int page, int pageSize, Specification<TEntity>? spec = null);
     Task<TEntity> Add(TEntity entity);
     Task Update(TEntity entity);
     Task Delete(TEntity entity);

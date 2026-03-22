@@ -4,6 +4,10 @@
 GET {{HostAddress}}
 Accept: application/json
 
+### Get paged users
+GET {{HostAddress}}?page=1&pageSize=10
+Accept: application/json
+
 ### Get user by id
 GET {{HostAddress}}/019cfa34-7caf-7a27-b595-0443042d2475
 Accept: application/json

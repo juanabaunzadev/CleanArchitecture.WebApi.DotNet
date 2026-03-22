@@ -23,11 +23,30 @@ public class Repository<T> : IRepository<T> where T : class
         return await _context.Set<T>().ToListAsync();
     }
 
-    public async Task<PaginatedList<T>> GetPagedAsync(int page, int pageSize)
+    public async Task<PaginatedList<T>> GetPagedAsync(int page, int pageSize, Specification<T>? spec = null)
     {
-        var totalCount = await _context.Set<T>().CountAsync();
+        var query = _context.Set<T>().AsQueryable();
 
-        var items = await _context.Set<T>()
+        if (spec is not null)
+        {
+            if (spec.IsNoTracking)
+                query = query.AsNoTracking();
+
+            foreach (var include in spec.Includes)
+                query = query.Include(include);
+
+            if (spec.Criteria is not null)
+                query = query.Where(spec.Criteria);
+
+            if (spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
+            else if (spec.OrderByDescending is not null)
+                query = query.OrderByDescending(spec.OrderByDescending);
+        }
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
