@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Abstractions/" />
     <Folder Include="Abstractions/Mediator/" />
+    <Folder Include="Abstractions/Notifications/" />
     <Folder Include="Abstractions/Persistence/" />
     <Folder Include="Abstractions/Repositories/" />
     <Folder Include="DTOs/" />

@@ -19,22 +19,22 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(UpdateUserCommand command)
+    public async Task Handle(UpdateUserCommand command, CancellationToken ct = default)
     {
-        var user = await _userRepository.GetByIdAsync(command.Id);
+        var user = await _userRepository.GetByIdAsync(command.Id, ct);
         if(user is null)
             throw new NotFoundException();
 
         user.Update(command.FirstName, command.LastName, command.Email);
-        
+
         try
         {
             await _userRepository.Update(user);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(ct);
         }
         catch (Exception)
         {
-            await _unitOfWork.RollbackAsync();
+            await _unitOfWork.RollbackAsync(ct);
             throw;
         }
     }

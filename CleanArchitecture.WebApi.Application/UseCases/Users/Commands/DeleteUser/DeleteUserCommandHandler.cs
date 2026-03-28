@@ -19,20 +19,20 @@ public class DeleteUserCommandHandler : ICommandHandler<DeleteUserCommand>
         _unitOfWork = unitOfWork;
     }
     
-    public async Task Handle(DeleteUserCommand command)
+    public async Task Handle(DeleteUserCommand command, CancellationToken ct = default)
     {
-        var user = await _userRepository.GetByIdAsync(command.Id);
+        var user = await _userRepository.GetByIdAsync(command.Id, ct);
         if(user is null)
             throw new NotFoundException();
 
         try
         {
             await _userRepository.Delete(user);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(ct);
         }
         catch (Exception)
         {
-            await _unitOfWork.RollbackAsync();
+            await _unitOfWork.RollbackAsync(ct);
             throw;
         }
     }

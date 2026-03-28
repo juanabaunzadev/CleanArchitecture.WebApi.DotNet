@@ -20,20 +20,20 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Guid> Handle(CreateUserCommand command)
+    public async Task<Guid> Handle(CreateUserCommand command, CancellationToken ct = default)
     {
         var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
-        
+
         try
         {
             var response = await _userRepository.Add(user);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(ct);
 
             return response.Id;
         }
         catch (Exception)
         {
-            await _unitOfWork.RollbackAsync();
+            await _unitOfWork.RollbackAsync(ct);
             throw;
         }
     }

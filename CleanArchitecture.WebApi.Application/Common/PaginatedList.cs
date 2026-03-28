@@ -10,9 +10,9 @@ public sealed class PaginatedList<T>
     public bool HasNextPage => Page < TotalPages;
     public bool HasPreviousPage => Page > 1;
 
-    public PaginatedList(IReadOnlyList<T> items, int page, int pageSize, int totalCount)
+    public PaginatedList(IEnumerable<T> items, int page, int pageSize, int totalCount)
     {
-        Items = items;
+        Items = items.ToList().AsReadOnly();
         Page = page;
         PageSize = pageSize;
         TotalCount = totalCount;

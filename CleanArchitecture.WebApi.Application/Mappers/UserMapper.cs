@@ -17,8 +17,6 @@ public static class UserMapper
         );
     }
 
-    public static IReadOnlyList<UserResponse> ToResponseList(IEnumerable<User> users)
-    {
-        return users.Select(ToResponse).ToList();
-    }
+    public static IEnumerable<UserResponse> ToResponseList(IEnumerable<User> users)
+        => users.Select(ToResponse);
 }
