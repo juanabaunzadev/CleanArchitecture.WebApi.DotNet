@@ -14,7 +14,7 @@ public class AppMediator : IMediator
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<TResponse> Send<TResponse>(ICommand<TResponse> command)
+    public async Task<TResponse> Send<TResponse>(ICommand<TResponse> command, CancellationToken ct = default)
     {
         await ValidateRequestAsync(command);
 
@@ -26,10 +26,10 @@ public class AppMediator : IMediator
 
         return await (Task<TResponse>)handlerType
             .GetMethod(nameof(ICommandHandler<ICommand<TResponse>, TResponse>.Handle))!
-            .Invoke(handler, [command])!;
+            .Invoke(handler, [command, ct])!;
     }
 
-    public async Task<TResponse> Send<TResponse>(IQuery<TResponse> query)
+    public async Task<TResponse> Send<TResponse>(IQuery<TResponse> query, CancellationToken ct = default)
     {
         await ValidateRequestAsync(query);
 
@@ -41,10 +41,10 @@ public class AppMediator : IMediator
 
         return await (Task<TResponse>)handlerType
             .GetMethod(nameof(IQueryHandler<IQuery<TResponse>, TResponse>.Handle))!
-            .Invoke(handler, [query])!;
+            .Invoke(handler, [query, ct])!;
     }
 
-    public async Task Send(ICommand command)
+    public async Task Send(ICommand command, CancellationToken ct = default)
     {
         await ValidateRequestAsync(command);
 
@@ -55,7 +55,7 @@ public class AppMediator : IMediator
 
         await (Task)handlerType
             .GetMethod(nameof(ICommandHandler<ICommand>.Handle))!
-            .Invoke(handler, [command])!;
+            .Invoke(handler, [command, ct])!;
     }
 
     private async Task ValidateRequestAsync(object request)

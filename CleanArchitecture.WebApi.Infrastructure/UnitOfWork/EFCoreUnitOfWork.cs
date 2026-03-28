@@ -11,12 +11,12 @@ public class EFCoreUnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public async Task SaveChangesAsync()
+    public async Task SaveChangesAsync(CancellationToken ct = default)
     {
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(ct);
     }
 
-    public Task RollbackAsync()
+    public Task RollbackAsync(CancellationToken ct = default)
     {
         return Task.CompletedTask;
     }

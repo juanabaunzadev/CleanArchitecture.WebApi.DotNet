@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
 using CleanArchitecture.WebApi.Application.Common;
 using Microsoft.EntityFrameworkCore;
@@ -6,50 +7,35 @@ namespace CleanArchitecture.WebApi.Infrastructure.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    private readonly AppDbContext _context;
+    protected readonly AppDbContext _context;
 
     public Repository(AppDbContext context)
     {
         _context = context;
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public async Task<T?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
-        return await _context.Set<T>().FindAsync(id);
+        return await _context.Set<T>().FindAsync([id], ct);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken ct = default)
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>().ToListAsync(ct);
     }
 
-    public async Task<PaginatedList<T>> GetPagedAsync(int page, int pageSize, Specification<T>? spec = null)
+    public async Task<PaginatedList<T>> GetPagedAsync(int page, int pageSize, Expression<Func<T, bool>>? filter = null, CancellationToken ct = default)
     {
-        var query = _context.Set<T>().AsQueryable();
+        var query = _context.Set<T>().AsNoTracking();
 
-        if (spec is not null)
-        {
-            if (spec.IsNoTracking)
-                query = query.AsNoTracking();
+        if (filter is not null)
+            query = query.Where(filter);
 
-            foreach (var include in spec.Includes)
-                query = query.Include(include);
-
-            if (spec.Criteria is not null)
-                query = query.Where(spec.Criteria);
-
-            if (spec.OrderBy is not null)
-                query = query.OrderBy(spec.OrderBy);
-            else if (spec.OrderByDescending is not null)
-                query = query.OrderByDescending(spec.OrderByDescending);
-        }
-
-        var totalCount = await query.CountAsync();
-
+        var totalCount = await query.CountAsync(ct);
         var items = await query
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .ToListAsync();
+            .ToListAsync(ct);
 
         return new PaginatedList<T>(items, page, pageSize, totalCount);
     }
