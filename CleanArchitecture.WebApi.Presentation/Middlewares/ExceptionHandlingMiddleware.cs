@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using CleanArchitecture.WebApi.Application.Exceptions;
+using CleanArchitecture.WebApi.Domain.Exceptions;
 using FluentValidation;
 
 namespace CleanArchitecture.WebApi.Presentation.Middlewares;
@@ -40,6 +41,10 @@ public class ExceptionHandlingMiddleware
             case ValidationException validationException:
                 httpStatusCode = HttpStatusCode.BadRequest;
                 result = JsonSerializer.Serialize(validationException.Errors);
+                break;
+            case DomainException:
+                httpStatusCode = HttpStatusCode.BadRequest;
+                result = JsonSerializer.Serialize(new { error = exception.Message });
                 break;
         }
 

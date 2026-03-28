@@ -24,52 +24,47 @@ public class UsersController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<PaginatedList<UserResponse>>> GetAll(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 10,
-        [FromQuery] string? firstName = null,
-        [FromQuery] string? lastName = null,
-        [FromQuery] bool? isActive = null,
-        [FromQuery] string? orderBy = null,
-        [FromQuery] string? orderDirection = null)
+        [FromQuery] int page = PaginationDefaults.DefaultPage,
+        [FromQuery] int pageSize = PaginationDefaults.DefaultPageSize,
+        [FromQuery] string? search = null,
+        CancellationToken ct = default)
     {
-        var query = new GetAllUsersQuery(page, pageSize, firstName, lastName, isActive, orderBy, orderDirection);
-        var users = await _mediator.Send(query);
-
-        return Ok(users);
+        var query = new GetAllUsersQuery(page, pageSize, search);
+        return Ok(await _mediator.Send(query, ct));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserResponse>> GetById(Guid id)
+    public async Task<ActionResult<UserResponse>> GetById(Guid id, CancellationToken ct = default)
     {
         var query = new GetUserByIdQuery(id);
-        var user = await _mediator.Send(query);
-        
+        var user = await _mediator.Send(query, ct);
+
         return Ok(user);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateUserRequest request, CancellationToken ct = default)
     {
         var command = new CreateUserCommand(request.FirstName, request.LastName, request.Email, request.Password);
-        await _mediator.Send(command);
-        
+        await _mediator.Send(command, ct);
+
         return Ok();
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request)
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request, CancellationToken ct = default)
     {
         var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email);
-        await _mediator.Send(command);
+        await _mediator.Send(command, ct);
 
         return Ok();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id, CancellationToken ct = default)
     {
         var command = new DeleteUserCommand(id);
-        await _mediator.Send(command);
+        await _mediator.Send(command, ct);
 
         return Ok();
     }
