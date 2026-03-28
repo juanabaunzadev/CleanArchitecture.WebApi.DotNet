@@ -32,15 +32,15 @@ public class DeleteUserCommandHandlerTests
         var user = User.Create("Test", "User", "test@example.com", "hashedPassword");
         var command = new DeleteUserCommand(user.Id);
 
-        _userRepository.GetByIdAsync(command.Id).Returns(user);
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns(user);
 
         // Act
         await _handler.Handle(command);
 
         // Assert
-        await _userRepository.Received(1).GetByIdAsync(command.Id);
+        await _userRepository.Received(1).GetByIdAsync(command.Id, Arg.Any<CancellationToken>());
         await _userRepository.Received(1).Delete(user);
-        await _unitOfWork.Received(1).SaveChangesAsync();
+        await _unitOfWork.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
     [TestMethod]
@@ -49,13 +49,13 @@ public class DeleteUserCommandHandlerTests
         // Arrange
         var command = new DeleteUserCommand(Guid.NewGuid());
 
-        _userRepository.GetByIdAsync(command.Id).Returns((User)null!);
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns((User)null!);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command));
-        await _userRepository.Received(1).GetByIdAsync(command.Id);
+        await _userRepository.Received(1).GetByIdAsync(command.Id, Arg.Any<CancellationToken>());
         await _userRepository.DidNotReceive().Delete(Arg.Any<User>());
-        await _unitOfWork.DidNotReceive().SaveChangesAsync();
+        await _unitOfWork.DidNotReceive().SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
     [TestMethod]
@@ -65,14 +65,14 @@ public class DeleteUserCommandHandlerTests
         var user = User.Create("Test", "User", "test@example.com", "hashedPassword");
         var command = new DeleteUserCommand(user.Id);
 
-        _userRepository.GetByIdAsync(command.Id).Returns(user);
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns(user);
         _userRepository.Delete(user).Throws(new Exception());
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command));
-        await _userRepository.Received(1).GetByIdAsync(command.Id);
+        await _userRepository.Received(1).GetByIdAsync(command.Id, Arg.Any<CancellationToken>());
         await _userRepository.Received(1).Delete(user);
-        await _unitOfWork.Received(1).RollbackAsync();
-        await _unitOfWork.DidNotReceive().SaveChangesAsync();
+        await _unitOfWork.Received(1).RollbackAsync(Arg.Any<CancellationToken>());
+        await _unitOfWork.DidNotReceive().SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 }

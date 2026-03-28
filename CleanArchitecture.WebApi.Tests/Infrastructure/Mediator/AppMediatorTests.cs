@@ -19,7 +19,7 @@ public class AppMediatorTests
     // Fake Handler
     public class FakeCommandHandler : ICommandHandler<FakeCommand, Guid>
     {
-        public Task<Guid> Handle(FakeCommand command)
+        public Task<Guid> Handle(FakeCommand command, CancellationToken ct = default)
         {
             return Task.FromResult(Guid.CreateVersion7());
         }
@@ -51,7 +51,7 @@ public class AppMediatorTests
         var expectedId = Guid.CreateVersion7();
 
         var handler = Substitute.For<ICommandHandler<FakeCommand, Guid>>();
-        handler.Handle(command).Returns(expectedId);
+        handler.Handle(command, Arg.Any<CancellationToken>()).Returns(expectedId);
 
         _serviceProvider.GetService(typeof(ICommandHandler<FakeCommand, Guid>))
             .Returns(handler);
@@ -60,7 +60,7 @@ public class AppMediatorTests
         var result = await _mediator.Send(command);
 
         // Assert
-        await handler.Received(1).Handle(command);
+        await handler.Received(1).Handle(command, Arg.Any<CancellationToken>());
         Assert.AreEqual(expectedId, result);
     }
 

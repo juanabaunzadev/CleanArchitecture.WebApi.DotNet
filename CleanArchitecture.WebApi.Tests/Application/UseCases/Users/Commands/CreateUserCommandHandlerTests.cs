@@ -41,7 +41,7 @@ public class CreateUserCommandHandlerTests
 
         // Assert
         await _userRepository.Received(1).Add(Arg.Any<User>());
-        await _unitOfWork.Received(1).SaveChangesAsync();
+        await _unitOfWork.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
         Assert.AreNotEqual(Guid.Empty, result);
     }
 
@@ -57,6 +57,6 @@ public class CreateUserCommandHandlerTests
         await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command));
 
         // Assert
-        await _unitOfWork.Received(1).RollbackAsync();
+        await _unitOfWork.Received(1).RollbackAsync(Arg.Any<CancellationToken>());
     }
 }

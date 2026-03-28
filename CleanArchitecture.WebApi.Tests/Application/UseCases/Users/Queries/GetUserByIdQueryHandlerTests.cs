@@ -29,7 +29,7 @@ public class GetUserByIdQueryHandlerTests
         var id = user.Id;
         var query = new GetUserByIdQuery(id);
         
-        _userRepository.GetByIdAsync(query.Id).Returns(user);
+        _userRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>()).Returns(user);
 
         // Act
         var result = await _handler.Handle(query);
@@ -49,8 +49,8 @@ public class GetUserByIdQueryHandlerTests
         // Arrange
         var id = Guid.NewGuid();
         var query = new GetUserByIdQuery(id);
-        
-        _userRepository.GetByIdAsync(query.Id).Returns((User)null!);
+
+        _userRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>()).Returns((User)null!);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(query));

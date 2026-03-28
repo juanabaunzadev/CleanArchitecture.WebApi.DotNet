@@ -38,14 +38,14 @@ public class UpdateUserCommandHandlerTests
 
         var user = User.Create("Test", "User", "test@example.com", "hashedPassword");
 
-        _userRepository.GetByIdAsync(command.Id).Returns(user);
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns(user);
 
         // Act
         await _handler.Handle(command);
 
         // Assert
-        await _userRepository.Received(1).GetByIdAsync(command.Id);
-        await _unitOfWork.Received(1).SaveChangesAsync();
+        await _userRepository.Received(1).GetByIdAsync(command.Id, Arg.Any<CancellationToken>());
+        await _unitOfWork.Received(1).SaveChangesAsync(Arg.Any<CancellationToken>());
     }
 
     [TestMethod]
@@ -59,13 +59,13 @@ public class UpdateUserCommandHandlerTests
             "test@example.com"
         );
 
-        _userRepository.GetByIdAsync(command.Id).Returns((User)null!);
+        _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns((User)null!);
 
         // Act & Assert
         await Assert.ThrowsAsync<NotFoundException>(() => _handler.Handle(command));
     }
 
-        [TestMethod]
+    [TestMethod]
     public async Task Handle_WhenExceptionOccurs_ShouldRollback()
     {
         // Arrange
@@ -77,12 +77,12 @@ public class UpdateUserCommandHandlerTests
             "User",
             "test@example.com"
         );
-        
-        _userRepository.GetByIdAsync(id).Returns(user);
+
+        _userRepository.GetByIdAsync(id, Arg.Any<CancellationToken>()).Returns(user);
         _userRepository.Update(user).Throws(new Exception());
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command));
-        await _unitOfWork.Received(1).RollbackAsync();
+        await _unitOfWork.Received(1).RollbackAsync(Arg.Any<CancellationToken>());
     }
 }
