@@ -1,5 +1,6 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
+using CleanArchitecture.WebApi.Application.Abstractions.Security;
 using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 using CleanArchitecture.WebApi.Domain.Entities;
@@ -16,6 +17,7 @@ public class CreateUserCommandHandlerTests
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private IUserRepository _userRepository;
     private IUnitOfWork _unitOfWork;
+    private IPasswordHasher _passwordHasher;
     private CreateUserCommandHandler _handler;
     #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
@@ -24,7 +26,9 @@ public class CreateUserCommandHandlerTests
     {
         _userRepository = Substitute.For<IUserRepository>();
         _unitOfWork = Substitute.For<IUnitOfWork>();
-        _handler = new CreateUserCommandHandler(_userRepository, _unitOfWork);
+        _passwordHasher = Substitute.For<IPasswordHasher>();
+        _passwordHasher.Hash(Arg.Any<string>()).Returns("hashed_password");
+        _handler = new CreateUserCommandHandler(_userRepository, _unitOfWork, _passwordHasher);
     }
 
     [TestMethod]
@@ -33,7 +37,7 @@ public class CreateUserCommandHandlerTests
         // Arrange
         var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!");
         
-        var userCreated = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
+        var userCreated = User.Create(command.FirstName, command.LastName, command.Email, "hashed_password");
         _userRepository.Add(Arg.Any<User>()).Returns(userCreated);
 
         // Act

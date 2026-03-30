@@ -1,6 +1,7 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
+using CleanArchitecture.WebApi.Application.Abstractions.Security;
 using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Domain.Entities;
 using FluentValidation;
@@ -11,18 +12,22 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IPasswordHasher _passwordHasher;
 
     public CreateUserCommandHandler(
         IUserRepository userRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IPasswordHasher passwordHasher)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _passwordHasher = passwordHasher;
     }
 
     public async Task<Guid> Handle(CreateUserCommand command, CancellationToken ct = default)
     {
-        var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
+        var passwordHash = _passwordHasher.Hash(command.Password);
+        var user = User.Create(command.FirstName, command.LastName, command.Email, passwordHash);
 
         try
         {
