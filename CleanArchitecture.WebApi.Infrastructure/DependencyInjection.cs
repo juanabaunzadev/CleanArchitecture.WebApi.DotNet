@@ -1,8 +1,10 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
+using CleanArchitecture.WebApi.Application.Abstractions.Security;
 using CleanArchitecture.WebApi.Infrastructure.Mediator;
 using CleanArchitecture.WebApi.Infrastructure.Repositories;
+using CleanArchitecture.WebApi.Infrastructure.Security;
 using CleanArchitecture.WebApi.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ public static class DependencyInjection
             options.UseSqlServer("name=AppConnectionString");
         });
 
+        services.AddSingleton<IPasswordHasher, Argon2idPasswordHasher>();
         services.AddTransient<IMediator, AppMediator>();
         services.AddScoped<IUnitOfWork, EFCoreUnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
