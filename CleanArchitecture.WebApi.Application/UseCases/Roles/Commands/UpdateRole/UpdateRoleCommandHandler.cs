@@ -3,34 +3,34 @@ using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
 using CleanArchitecture.WebApi.Application.Exceptions;
 
-namespace CleanArchitecture.WebApi.Application.UseCases.Users.Commands.UpdateUser;
+namespace CleanArchitecture.WebApi.Application.UseCases.Roles.Commands.UpdateRole;
 
-public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
+public class UpdateRoleCommandHandler : ICommandHandler<UpdateRoleCommand>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IRoleRepository _roleRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateUserCommandHandler(
-        IUserRepository userRepository,
+    public UpdateRoleCommandHandler(
+        IRoleRepository roleRepository,
         IUnitOfWork unitOfWork
     )
     {
-        _userRepository = userRepository;
+        _roleRepository = roleRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(UpdateUserCommand command, CancellationToken ct = default)
+    public async Task Handle(UpdateRoleCommand command, CancellationToken ct = default)
     {
-        var user = await _userRepository.GetByIdAsync(command.Id, ct);
+        var role = await _roleRepository.GetByIdAsync(command.Id, ct);
         
-        if(user is null)
+        if(role is null)
             throw new NotFoundException();
 
-        user.Update(command.FirstName, command.LastName, command.Email);
+        role.Update(command.Name);
 
         try
         {
-            await _userRepository.Update(user);
+            await _roleRepository.Update(role);
             await _unitOfWork.SaveChangesAsync(ct);
         }
         catch (Exception)

@@ -15,9 +15,7 @@
     <Folder Include="DTOs/" />
     <Folder Include="DTOs/Users/" />
     <Folder Include="Mappers/" />
-    <Folder Include="UseCases/" />
-    <Folder Include="UseCases/Roles/" />
-    <Folder Include="UseCases/Roles/Commands/" />
+    <Folder Include="UseCases/Roles/Commands/UpdateRole/" />
     <Folder Include="UseCases/Roles/Queries/" />
     <Folder Include="UseCases/Users/" />
     <Folder Include="UseCases/Users/Commands/" />
