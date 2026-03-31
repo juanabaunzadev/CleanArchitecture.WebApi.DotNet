@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers/" />
     <Folder Include="Middlewares/" />
     <Folder Include="Requests/" />
+    <Folder Include="Requests/Roles/" />
     <Folder Include="Requests/Users/" />
   </ItemGroup>
 
