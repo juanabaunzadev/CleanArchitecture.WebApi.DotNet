@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application/" />
-    <Folder Include="Application/UseCases/" />
+    <Folder Include="Application/UseCases/Roles/Commands/" />
+    <Folder Include="Application/UseCases/Roles/Queries/" />
     <Folder Include="Application/UseCases/Users/" />
     <Folder Include="Application/UseCases/Users/Commands/" />
     <Folder Include="Application/UseCases/Users/Queries/" />
