@@ -24,4 +24,17 @@ public class Role
             RolePermissions = new List<RolePermission>()
         };
     }
+
+    public void Update(string name)
+    {
+        VerifyDomainRules(name);
+
+        Name = name.Trim();
+    }
+
+    private static void VerifyDomainRules(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException("Role name is required.");
+    }
 }
