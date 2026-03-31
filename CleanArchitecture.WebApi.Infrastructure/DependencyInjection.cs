@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddTransient<IMediator, AppMediator>();
         services.AddScoped<IUnitOfWork, EFCoreUnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
 
         return services;
     }
