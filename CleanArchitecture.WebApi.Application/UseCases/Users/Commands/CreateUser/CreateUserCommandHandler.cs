@@ -2,9 +2,7 @@ using CleanArchitecture.WebApi.Application.Abstractions.Mediator;
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
 using CleanArchitecture.WebApi.Application.Abstractions.Security;
-using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Domain.Entities;
-using FluentValidation;
 
 namespace CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 

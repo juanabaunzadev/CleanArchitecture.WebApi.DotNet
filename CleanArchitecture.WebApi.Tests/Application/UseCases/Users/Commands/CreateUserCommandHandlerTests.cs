@@ -1,11 +1,8 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Persistence;
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
 using CleanArchitecture.WebApi.Application.Abstractions.Security;
-using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.CreateUser;
 using CleanArchitecture.WebApi.Domain.Entities;
-using FluentValidation;
-using FluentValidation.Results;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 
@@ -36,7 +33,6 @@ public class CreateUserCommandHandlerTests
     {
         // Arrange
         var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!");
-        
         var userCreated = User.Create(command.FirstName, command.LastName, command.Email, "hashed_password");
         _userRepository.Add(Arg.Any<User>()).Returns(userCreated);
 
