@@ -1,5 +1,11 @@
 @HostAddress = http://localhost:5109/api/roles
 
+### Get all roles
+GET {{HostAddress}}?page=1&pageSize=10
+
+### Get role by id
+GET {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
+
 ### Create user
 POST {{HostAddress}}
 Content-Type: application/json
@@ -7,3 +13,14 @@ Content-Type: application/json
 {
   "name": "Administrator"
 }
+
+### Update user
+PUT {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
+Content-Type: application/json
+
+{
+  "name": "Updated Administrator"
+}
+
+### Delete role
+DELETE {{HostAddress}}/019d41af-378c-78c5-b2ba-093f10ab3a4d
