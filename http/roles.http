@@ -6,20 +6,27 @@ GET {{HostAddress}}?page=1&pageSize=10
 ### Get role by id
 GET {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
 
-### Create user
+### Create role
 POST {{HostAddress}}
 Content-Type: application/json
 
 {
-  "name": "Administrator"
+  "name": "Administrator",
+  "permissionIds": [
+    "019cfa36-69d8-72c5-8d00-431a7044626d"
+  ]
 }
 
-### Update user
+### Update role
 PUT {{HostAddress}}/019cfa36-69d8-72c5-8d00-431a7044626c
 Content-Type: application/json
 
 {
-  "name": "Updated Administrator"
+  "name": "Updated Administrator",
+  "permissionIds": [
+    "019cfa36-69d8-72c5-8d00-431a7044626d",
+    "019cfa36-69d8-72c5-8d00-431a7044626e"
+  ]
 }
 
 ### Delete role

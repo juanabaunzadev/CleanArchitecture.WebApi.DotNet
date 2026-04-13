@@ -20,7 +20,8 @@ Content-Type: application/json
   "firstName": "Juan",
   "lastName": "Doe",
   "email": "juan.doe@example.com",
-  "password": "Secret123!"
+  "password": "Secret123!",
+  "roleIds": []
 }
 
 ### Update user
@@ -31,7 +32,7 @@ Content-Type: application/json
   "firstName": "John",
   "lastName": "Doe",
   "email": "john.doe@example.com",
-  "password": "Secret123!"
+  "roleIds": []
 }
 
 ### Delete user
