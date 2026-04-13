@@ -38,6 +38,10 @@ public class ExceptionHandlingMiddleware
             case NotFoundException:
                 httpStatusCode = HttpStatusCode.NotFound;
                 break;
+            case UnauthorizedException:
+                httpStatusCode = HttpStatusCode.Unauthorized;
+                result = JsonSerializer.Serialize(new { error = exception.Message });
+                break;
             case ValidationException validationException:
                 httpStatusCode = HttpStatusCode.BadRequest;
                 result = JsonSerializer.Serialize(validationException.Errors);

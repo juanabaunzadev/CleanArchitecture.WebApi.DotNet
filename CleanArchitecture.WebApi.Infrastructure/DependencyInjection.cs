@@ -21,10 +21,12 @@ public static class DependencyInjection
         });
 
         services.AddSingleton<IPasswordHasher, Argon2idPasswordHasher>();
+        services.AddSingleton<IJwtTokenService, JwtTokenService>();
         services.AddTransient<IMediator, AppMediator>();
         services.AddScoped<IUnitOfWork, EFCoreUnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<IPermissionRepository, PermissionRepository>();
 
         return services;
     }
