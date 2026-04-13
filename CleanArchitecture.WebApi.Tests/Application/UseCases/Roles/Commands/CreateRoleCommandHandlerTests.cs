@@ -28,7 +28,7 @@ public class CreateRoleCommandHandlerTests
     public async Task Handle_Should_CreateRole_When_CommandIsValid()
     {
         // Arrange
-        var command = new CreateRoleCommand("Admin");
+        var command = new CreateRoleCommand("Admin", [Guid.NewGuid()]);
         var roleCreated = Role.Create(command.Name);
         _roleRepository.Add(Arg.Any<Role>()).Returns(roleCreated);
 
@@ -44,7 +44,7 @@ public class CreateRoleCommandHandlerTests
     public async Task Handle_Should_Rollback_When_ExceptionIsThrown()
     {
         // Arrange
-        var command = new CreateRoleCommand("Admin");
+        var command = new CreateRoleCommand("Admin", []);
 
         _roleRepository.Add(Arg.Any<Role>()).Throws(new Exception("Database error"));
 

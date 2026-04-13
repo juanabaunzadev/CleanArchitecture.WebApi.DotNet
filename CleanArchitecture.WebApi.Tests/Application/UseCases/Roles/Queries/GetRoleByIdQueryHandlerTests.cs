@@ -1,4 +1,5 @@
 using CleanArchitecture.WebApi.Application.Abstractions.Repositories;
+using CleanArchitecture.WebApi.Application.DTOs.Roles;
 using CleanArchitecture.WebApi.Application.Exceptions;
 using CleanArchitecture.WebApi.Application.UseCases.Roles.Queries.GetRoleById;
 using CleanArchitecture.WebApi.Domain.Entities;
@@ -22,7 +23,7 @@ public class GetRoleByIdQueryHandlerTests
     }
 
     [TestMethod]
-    public async Task Handle_Returns_RoleResponse_When_Role_Exists()
+    public async Task Handle_Returns_RoleDetailResponse_When_Role_Exists()
     {
         // Arrange
         var role = Role.Create("Admin");
@@ -34,8 +35,10 @@ public class GetRoleByIdQueryHandlerTests
 
         // Assert
         Assert.IsNotNull(result);
+        Assert.IsInstanceOfType<RoleDetailResponse>(result);
         Assert.AreEqual(role.Id, result.Id);
         Assert.AreEqual(role.Name, result.Name);
+        Assert.AreEqual(0, result.Permissions.Count());
     }
 
     [TestMethod]

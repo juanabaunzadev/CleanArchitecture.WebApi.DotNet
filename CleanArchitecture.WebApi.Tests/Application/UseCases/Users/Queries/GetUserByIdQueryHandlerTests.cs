@@ -22,7 +22,7 @@ public class GetUserByIdQueryHandlerTests
     }
 
     [TestMethod]
-    public async Task Handle_Returns_UserResponse_When_User_Exists()
+    public async Task Handle_Returns_UserDetailResponse_When_User_Exists()
     {
         // Arrange
         var user = User.Create("John", "Doe", "john.doe@example.com", "password");

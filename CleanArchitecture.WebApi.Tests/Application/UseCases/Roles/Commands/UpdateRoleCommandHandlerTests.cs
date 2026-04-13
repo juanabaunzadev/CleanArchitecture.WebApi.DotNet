@@ -29,7 +29,7 @@ public class UpdateRoleCommandHandlerTests
     {
         // Arrange
         var roleId = Guid.NewGuid();
-        var command = new UpdateRoleCommand(roleId, "Admin");
+        var command = new UpdateRoleCommand(roleId, "Admin", [Guid.NewGuid()]);
         var existingRole = Role.Create("User");
         _roleRepository.GetByIdAsync(roleId, Arg.Any<CancellationToken>()).Returns(existingRole);
 
@@ -46,7 +46,7 @@ public class UpdateRoleCommandHandlerTests
     {
         // Arrange
         var roleId = Guid.NewGuid();
-        var command = new UpdateRoleCommand(roleId, "Admin");
+        var command = new UpdateRoleCommand(roleId, "Admin", []);
         _roleRepository.GetByIdAsync(roleId, Arg.Any<CancellationToken>()).Returns((Role)null!);
 
         // Act & Assert

@@ -33,7 +33,8 @@ public class UpdateUserCommandHandlerTests
             Guid.NewGuid(),
             "Test",
             "User",
-            "test@example.com"
+            "test@example.com",
+            []
         );
 
         var user = User.Create("Test", "User", "test@example.com", "hashedPassword");
@@ -56,7 +57,8 @@ public class UpdateUserCommandHandlerTests
             Guid.NewGuid(),
             "Test",
             "User",
-            "test@example.com"
+            "test@example.com",
+            []
         );
 
         _userRepository.GetByIdAsync(command.Id, Arg.Any<CancellationToken>()).Returns((User)null!);
@@ -75,7 +77,8 @@ public class UpdateUserCommandHandlerTests
             id,
             "Test",
             "User",
-            "test@example.com"
+            "test@example.com",
+            []
         );
 
         _userRepository.GetByIdAsync(id, Arg.Any<CancellationToken>()).Returns(user);

@@ -32,7 +32,7 @@ public class CreateUserCommandHandlerTests
     public async Task Handle_Should_CreateUser_When_CommandIsValid()
     {
         // Arrange
-        var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!");
+        var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!", []);
         var userCreated = User.Create(command.FirstName, command.LastName, command.Email, "hashed_password");
         _userRepository.Add(Arg.Any<User>()).Returns(userCreated);
 
@@ -49,7 +49,7 @@ public class CreateUserCommandHandlerTests
     public async Task Handle_Should_Rollback_When_ExceptionIsThrown()
     {
         // Arrange
-        var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!");
+        var command = new CreateUserCommand("John", "Doe", "john.doe@example.com", "Password123!", []);
 
         _userRepository.Add(Arg.Any<User>()).Throws(new Exception("Database error"));
 
