@@ -22,6 +22,7 @@ public class CreateRoleCommandHandler : ICommandHandler<CreateRoleCommand, Guid>
     public async Task<Guid> Handle(CreateRoleCommand command, CancellationToken ct = default)
     {
         var role = Role.Create(command.Name);
+        role.SyncPermissions(command.PermissionIds);
 
         try
         {

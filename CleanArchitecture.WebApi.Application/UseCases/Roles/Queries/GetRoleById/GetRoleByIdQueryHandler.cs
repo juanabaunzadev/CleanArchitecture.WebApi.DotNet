@@ -6,7 +6,7 @@ using CleanArchitecture.WebApi.Application.Mappers;
 
 namespace CleanArchitecture.WebApi.Application.UseCases.Roles.Queries.GetRoleById;
 
-public class GetRoleByIdQueryHandler : IQueryHandler<GetRoleByIdQuery, RoleResponse>
+public class GetRoleByIdQueryHandler : IQueryHandler<GetRoleByIdQuery, RoleDetailResponse>
 {
     private readonly IRoleRepository _roleRepository;
 
@@ -15,13 +15,13 @@ public class GetRoleByIdQueryHandler : IQueryHandler<GetRoleByIdQuery, RoleRespo
         _roleRepository = roleRepository;
     }
 
-    public async Task<RoleResponse> Handle(GetRoleByIdQuery query, CancellationToken ct = default)
+    public async Task<RoleDetailResponse> Handle(GetRoleByIdQuery query, CancellationToken ct = default)
     {
         var role = await _roleRepository.GetByIdAsync(query.Id, ct);
 
         if (role is null)
             throw new NotFoundException();
 
-        return RoleMapper.ToResponse(role);
+        return RoleMapper.ToDetailResponse(role);
     }
 }

@@ -8,5 +8,11 @@ public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("{PropertyName} is required.");
+
+        RuleFor(x => x.PermissionIds)
+            .NotNull().WithMessage("{PropertyName} is required.");
+
+        RuleForEach(x => x.PermissionIds)
+            .NotEmpty().WithMessage("Each PermissionId must be a valid Guid.");
     }
 }

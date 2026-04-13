@@ -27,6 +27,7 @@ public class UpdateRoleCommandHandler : ICommandHandler<UpdateRoleCommand>
             throw new NotFoundException();
 
         role.Update(command.Name);
+        role.SyncPermissions(command.PermissionIds);
 
         try
         {

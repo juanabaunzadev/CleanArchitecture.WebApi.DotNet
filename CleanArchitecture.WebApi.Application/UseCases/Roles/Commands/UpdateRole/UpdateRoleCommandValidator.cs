@@ -12,5 +12,11 @@ public class UpdateRoleCommandValidator : AbstractValidator<UpdateRoleCommand>
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .MaximumLength(100).WithMessage("{PropertyName} must not exceed 100 characters.");
+
+        RuleFor(x => x.PermissionIds)
+            .NotNull().WithMessage("{PropertyName} is required.");
+
+        RuleForEach(x => x.PermissionIds)
+            .NotEmpty().WithMessage("Each PermissionId must be a valid Guid.");
     }
 }

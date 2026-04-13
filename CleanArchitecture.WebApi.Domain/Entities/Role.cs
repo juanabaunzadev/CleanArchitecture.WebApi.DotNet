@@ -32,6 +32,22 @@ public class Role
         Name = name.Trim();
     }
 
+    public void SyncPermissions(List<Guid> permissionIds)
+    {
+        var toRemove = RolePermissions
+            .Where(rp => !permissionIds.Contains(rp.PermissionId))
+            .ToList();
+
+        foreach (var rp in toRemove)
+            RolePermissions.Remove(rp);
+
+        var existingIds = RolePermissions.Select(rp => rp.PermissionId).ToList();
+        var toAdd = permissionIds.Where(id => !existingIds.Contains(id));
+
+        foreach (var id in toAdd)
+            RolePermissions.Add(RolePermission.Create(Id, id));
+    }
+
     private static void VerifyDomainRules(string name)
     {
         if (string.IsNullOrWhiteSpace(name))

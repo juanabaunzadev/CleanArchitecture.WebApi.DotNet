@@ -12,4 +12,13 @@ public static class RoleMapper
             role.Name
         );
     }
+
+    public static RoleDetailResponse ToDetailResponse(Role role)
+    {
+        return new RoleDetailResponse(
+            role.Id,
+            role.Name,
+            role.RolePermissions.Select(rp => PermissionMapper.ToResponse(rp.Permission))
+        );
+    }
 }

@@ -45,7 +45,7 @@ public class RolesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateRoleRequest request, CancellationToken ct = default)
     {
-        var command = new CreateRoleCommand(request.Name);
+        var command = new CreateRoleCommand(request.Name, request.PermissionIds);
         await _mediator.Send(command, ct);
         
         return Ok();
@@ -54,7 +54,7 @@ public class RolesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateRoleRequest request, CancellationToken ct = default)
     {
-        var command = new UpdateRoleCommand(id, request.Name);
+        var command = new UpdateRoleCommand(id, request.Name, request.PermissionIds);
         await _mediator.Send(command, ct);
 
         return Ok();
