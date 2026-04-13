@@ -27,4 +27,21 @@ public class Permission
             RolePermissions = new List<RolePermission>()
         };
     }
+
+    public void Update(string name, string description)
+    {
+        VerifyDomainRules(name, description);
+
+        Name = name.ToLower().Trim();
+        Description = description.Trim();
+    }
+
+    private static void VerifyDomainRules(string name, string description)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException("Permission name is required.");
+
+        if (string.IsNullOrWhiteSpace(description))
+            throw new DomainException("Permission description is required.");
+    }
 }
