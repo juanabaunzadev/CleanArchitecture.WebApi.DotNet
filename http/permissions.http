@@ -1,0 +1,28 @@
+@HostAddress = http://localhost:5109/api/permissions
+
+### Get all permissions
+GET {{HostAddress}}?page=1&pageSize=10
+
+### Get permission by id
+GET {{HostAddress}}/019d5534-a92d-7ce0-a2b9-fbf143ea1c4e
+
+### Create permission
+POST {{HostAddress}}
+Content-Type: application/json
+
+{
+  "name": "users.read",
+  "description": "Allows reading users"
+}
+
+### Update permission
+PUT {{HostAddress}}/019d5534-a92d-7ce0-a2b9-fbf143ea1c4e
+Content-Type: application/json
+
+{
+  "name": "users.write",
+  "description": "Allows writing users"
+}
+
+### Delete permission
+DELETE {{HostAddress}}/019d5534-a92d-7ce0-a2b9-fbf143ea1c4e
