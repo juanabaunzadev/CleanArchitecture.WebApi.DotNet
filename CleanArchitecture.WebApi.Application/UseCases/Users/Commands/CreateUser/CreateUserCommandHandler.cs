@@ -26,6 +26,7 @@ public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Guid>
     {
         var passwordHash = _passwordHasher.Hash(command.Password);
         var user = User.Create(command.FirstName, command.LastName, command.Email, passwordHash);
+        user.SyncRoles(command.RoleIds);
 
         try
         {

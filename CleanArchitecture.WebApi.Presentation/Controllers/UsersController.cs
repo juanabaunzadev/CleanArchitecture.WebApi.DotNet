@@ -34,7 +34,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserResponse>> GetById(Guid id, CancellationToken ct = default)
+    public async Task<ActionResult<UserDetailResponse>> GetById(Guid id, CancellationToken ct = default)
     {
         var query = new GetUserByIdQuery(id);
         var user = await _mediator.Send(query, ct);
@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateUserRequest request, CancellationToken ct = default)
     {
-        var command = new CreateUserCommand(request.FirstName, request.LastName, request.Email, request.Password);
+        var command = new CreateUserCommand(request.FirstName, request.LastName, request.Email, request.Password, request.RoleIds);
         await _mediator.Send(command, ct);
 
         return Ok();
@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request, CancellationToken ct = default)
     {
-        var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email);
+        var command = new UpdateUserCommand(id, request.FirstName, request.LastName, request.Email, request.RoleIds);
         await _mediator.Send(command, ct);
 
         return Ok();

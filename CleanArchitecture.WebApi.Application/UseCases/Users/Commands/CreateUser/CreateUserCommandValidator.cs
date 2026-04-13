@@ -18,5 +18,8 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("{PropertyName} is required.");
+
+        RuleFor(x => x.RoleIds)
+            .NotNull().WithMessage("{PropertyName} is required.");
     }
 }

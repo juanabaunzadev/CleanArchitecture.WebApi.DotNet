@@ -27,6 +27,7 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
             throw new NotFoundException();
 
         user.Update(command.FirstName, command.LastName, command.Email);
+        user.SyncRoles(command.RoleIds);
 
         try
         {

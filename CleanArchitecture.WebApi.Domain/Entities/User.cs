@@ -35,6 +35,22 @@ public class User
         };
     }
 
+    public void SyncRoles(List<Guid> roleIds)
+    {
+        var toRemove = UserRoles
+            .Where(ur => !roleIds.Contains(ur.RoleId))
+            .ToList();
+
+        foreach (var ur in toRemove)
+            UserRoles.Remove(ur);
+
+        var existingIds = UserRoles.Select(ur => ur.RoleId).ToList();
+        var toAdd = roleIds.Where(id => !existingIds.Contains(id));
+
+        foreach (var id in toAdd)
+            UserRoles.Add(UserRole.Create(Id, id));
+    }
+
     public void Update(string firstName, string lastName, string email)
     {
         VerifyDomainRules(firstName, lastName, email);

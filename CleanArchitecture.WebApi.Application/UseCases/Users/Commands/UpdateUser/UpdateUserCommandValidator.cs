@@ -20,5 +20,8 @@ public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("{PropertyName} is required.")
             .EmailAddress().WithMessage("Invalid email format.");
+
+        RuleFor(x => x.RoleIds)
+            .NotNull().WithMessage("{PropertyName} is required.");
     }
 }

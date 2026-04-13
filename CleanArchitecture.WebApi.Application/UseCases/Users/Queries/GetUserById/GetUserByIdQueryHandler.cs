@@ -6,7 +6,7 @@ using CleanArchitecture.WebApi.Application.Mappers;
 
 namespace CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
 
-public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserResponse>
+public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserDetailResponse>
 {
     private readonly IUserRepository _userRepository;
 
@@ -15,7 +15,7 @@ public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserRespo
         _userRepository = userRepository;
     }
 
-    public async Task<UserResponse> Handle(GetUserByIdQuery query, CancellationToken ct = default)
+    public async Task<UserDetailResponse> Handle(GetUserByIdQuery query, CancellationToken ct = default)
     {
         var user = await _userRepository.GetByIdAsync(query.Id, ct);
 
@@ -24,6 +24,6 @@ public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserRespo
             throw new NotFoundException();
         }
 
-        return UserMapper.ToResponse(user);
+        return UserMapper.ToDetailResponse(user);
     }
 }
