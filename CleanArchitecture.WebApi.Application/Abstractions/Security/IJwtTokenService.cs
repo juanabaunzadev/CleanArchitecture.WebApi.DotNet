@@ -5,5 +5,5 @@ namespace CleanArchitecture.WebApi.Application.Abstractions.Security;
 
 public interface IJwtTokenService
 {
-    LoginResponse GenerateToken(User user);
+    LoginResponse GenerateToken(User user, string refreshToken, DateTime refreshTokenExpiry);
 }

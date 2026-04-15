@@ -24,7 +24,7 @@ public class JwtTokenService : IJwtTokenService
         _expirationMinutes = int.Parse(configuration["Jwt:ExpirationMinutes"]!);
     }
 
-    public LoginResponse GenerateToken(User user)
+    public LoginResponse GenerateToken(User user, string refreshToken, DateTime refreshTokenExpiry)
     {
         var claims = BuildClaims(user);
         var expiresAt = DateTime.UtcNow.AddMinutes(_expirationMinutes);
@@ -39,7 +39,7 @@ public class JwtTokenService : IJwtTokenService
             expires: expiresAt,
             signingCredentials: credentials);
 
-        return new LoginResponse(new JwtSecurityTokenHandler().WriteToken(token), expiresAt);
+        return new LoginResponse(new JwtSecurityTokenHandler().WriteToken(token), expiresAt, refreshToken, refreshTokenExpiry);
     }
 
     private static List<Claim> BuildClaims(User user)

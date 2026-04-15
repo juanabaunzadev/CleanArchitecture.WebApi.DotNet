@@ -7,10 +7,12 @@ using CleanArchitecture.WebApi.Application.UseCases.Permissions.Commands.UpdateP
 using CleanArchitecture.WebApi.Application.UseCases.Permissions.Queries.GetAllPermissions;
 using CleanArchitecture.WebApi.Application.UseCases.Permissions.Queries.GetPermissionById;
 using CleanArchitecture.WebApi.Presentation.Requests.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebApi.Presentation.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class PermissionsController : ControllerBase

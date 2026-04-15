@@ -7,10 +7,12 @@ using CleanArchitecture.WebApi.Application.UseCases.Users.Commands.UpdateUser;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetAllUsers;
 using CleanArchitecture.WebApi.Application.UseCases.Users.Queries.GetUserById;
 using CleanArchitecture.WebApi.Presentation.Requests.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebApi.Presentation.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase

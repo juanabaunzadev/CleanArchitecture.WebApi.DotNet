@@ -7,10 +7,12 @@ using CleanArchitecture.WebApi.Application.UseCases.Roles.Commands.UpdateRole;
 using CleanArchitecture.WebApi.Application.UseCases.Roles.Queries.GetAllRoles;
 using CleanArchitecture.WebApi.Application.UseCases.Roles.Queries.GetRoleById;
 using CleanArchitecture.WebApi.Presentation.Requests.Roles;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebApi.Presentation.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class RolesController : ControllerBase
